@@ -12,7 +12,8 @@ angular.module('angularfireSlackApp')
 		}
 		
 		vm.createChannel = function(){
- 			vm.channels.$add(vm.newChannel).then(function(){
+ 			vm.channels.$add(vm.newChannel).then(function(ref){
+				$state.go('app.channels.messages', {channelId: ref.key()});
     			vm.newChannel = { name: '' };
 			});
 		} 

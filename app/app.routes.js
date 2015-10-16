@@ -81,7 +81,20 @@ angular.module('angularfireSlackApp')
         controller: 'ChannelsController as c',
         templateUrl: 'channels/create.html'
       })
-     
+      
+      .state('app.channels.messages', {
+        url: '{channelId}/messages',
+        controller: 'MessagesController as m',
+        templateUrl: 'channels/messages.html',
+        resolve: {
+          messages: function($stateParams, Messages){
+            return Messages.forChannel($stateParams.channelId).$loaded();
+          },
+          channelName: function($stateParams, channels){
+            return '#'+channels.$getRecord($stateParams.channelId).name;
+          }
+        }
+      })
       
       .state('login', {
         url: '/login',

@@ -24,9 +24,9 @@ body {
 
 .sidebar {
   display:inline-block;
-  width:19.5%;
+  width:19%;
   vertical-align: top;
-  height:100%;
+  height:83%;
   background:#4d394b;
   position:relative;
   overflow-y:scroll;
@@ -145,8 +145,8 @@ body {
 .message-pane {
   display:inline-block;
   vertical-align: top;
-  height:100%;
-  width:80%;
+  height:83%;
+  width:79%;
   overflow-y:scroll;
   padding:55px 15px 65px 15px;
 }

@@ -1,0 +1,27 @@
+<div class="header">
+  <h1>{{ m.channelName }}</h1>
+</div>
+
+<div class="message-wrap" ng-repeat="message in m.messages">
+  <img class="user-pic" ng-src="{{ c.getGravatar(message.uid) }}" />
+  <div class="message-info">
+    <div class="user-name">
+      {{ c.getDisplayName(message.uid) }}
+      <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
+    </div>
+    <div class="message">
+     {{ message.body }}
+    </div>
+  </div>
+</div>
+
+<form class="message-form" ng-submit="m.sendMessage()">
+
+  <div class="input-group">
+    <input type="text" class="form-control" ng-model="m.message" placeholder="Type a message...">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="submit">Send</button>
+    </span>
+  </div>
+
+</form>

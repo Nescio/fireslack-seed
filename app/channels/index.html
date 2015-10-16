@@ -7,10 +7,10 @@
 
     <div class="channel-list">
       <div class="list-head">Channels</div>
-        <div class="channel" ng-repeat="channel in c.channels">
-        <a># {{ channel.name }}</a>
+      <div class="channel" ng-repeat="channel in c.channels">
+        <a ui-sref="app.channels.messages({channelId: channel.$id})" ui-sref-active="selected"># {{ channel.name }}</a>
       </div>
-      
+    
       <div class="channel create">
         <a ui-sref="app.channels.create">+ create channel</a>
       </div>
