@@ -16,7 +16,7 @@
       </div>
       
       <div class="list-head">Direct Messages</div>
-      <div class="channel" ng-repeat="user in c.users">
+      <div class="channel" ng-repeat="user in c.Users.all">
         <a ng-if="user.$id !== c.profile.$id" ui-sref="app.channels.private({uid: user.$id})" ui-sref-active="selected">
           <span class="presence" ng-class="{online: user.online}"></span>
           {{ user.displayName }}

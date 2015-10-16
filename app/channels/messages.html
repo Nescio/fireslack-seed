@@ -6,7 +6,7 @@
   <img class="user-pic" ng-src="{{ c.getGravatar(message.uid) }}" />
   <div class="message-info">
     <div class="user-name">
-      {{ c.getDisplayName(message.uid) }}
+      {{ c.Users.getDisplayName(message.uid) }}
       <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
     </div>
     <div class="message">
