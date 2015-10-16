@@ -4,7 +4,7 @@ angular.module('angularfireSlackApp')
     	var vm = this;
 		vm.profile = profile;
 		vm.channels = channels;
-		vm.users = Users;
+		vm.users = Users.all;
 
 
 		vm.newChannel = {

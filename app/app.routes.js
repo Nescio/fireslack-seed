@@ -83,7 +83,7 @@ angular.module('angularfireSlackApp')
       })
       
       .state('app.channels.messages', {
-        url: '{channelId}/messages',
+        url: '/{channelId}/messages',
         controller: 'MessagesController as m',
         templateUrl: 'channels/messages.html',
         resolve: {
@@ -92,6 +92,22 @@ angular.module('angularfireSlackApp')
           },
           channelName: function($stateParams, channels){
             return '#'+channels.$getRecord($stateParams.channelId).name;
+          }
+        }
+      })
+      
+      .state('app.channels.private', {
+        url: '/{uid}/messages/private',
+        controller: 'MessagesController as m',
+        templateUrl: 'channels/messages.html',
+        resolve: {
+          messages: function($stateParams, Messages, profile){
+            return Messages.forUsers($stateParams.uid, profile.$id).$loaded();
+          },
+          channelName: function($stateParams, Users){
+            return Users.all.$loaded().then(function(){
+              return '@'+Users.getDisplayName($stateParams.uid);
+            });
           }
         }
       })

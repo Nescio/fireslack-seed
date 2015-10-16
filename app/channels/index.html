@@ -14,6 +14,13 @@
       <div class="channel create">
         <a ui-sref="app.channels.create">+ create channel</a>
       </div>
+      
+      <div class="list-head">Direct Messages</div>
+      <div class="channel" ng-repeat="user in c.users">
+        <a ng-if="user.$id !== c.profile.$id" ui-sref="app.channels.private({uid: user.$id})" ui-sref-active="selected">
+          {{ user.displayName }}
+        </a>
+      </div>
     </div>
 
 
@@ -31,7 +38,9 @@
         </div>
       </div>
     </div>
+    
   </div>
+  
   <div class="message-pane">
     <ui-view></ui-view>
   </div>
