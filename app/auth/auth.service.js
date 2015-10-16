@@ -13,6 +13,10 @@ angular.module('angularfireSlackApp')
 		auth.requireAuth = function(){
 			return fireAuth.$requireAuth();
 		}
+		
+		auth.logout = function(){
+		    fireAuth.$unauth();
+		}
 				
 		auth.login = function(){
 			return fireAuth.$authWithPassword(auth.user)

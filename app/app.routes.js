@@ -4,22 +4,35 @@ angular.module('angularfireSlackApp')
     $urlRouterProvider.otherwise('/');
    
     $stateProvider
+    
       .state('home', {
         url: '/',
-        templateUrl: 'home/home.html'
-      })
-      .state('profile', {
-        url: '/profile',
-        controller: 'ProfileController as p',
-        templateUrl:'users/profile.html',
+        templateUrl: 'home/home.html',
         resolve: {
-          auth: function($state, Users, Auth){
+          requireAuth: noAuth
+        }
+      })
+      
+      .state('app',{
+        url: '/app',
+        template: '<ui-view />',
+        abstract: true,
+        resolve: {
+          auth: function($state, Auth){
             return Auth.requireAuth().catch(fail);      
                   
             function fail(){
               $state.go('home');
             }
-          },
+          }
+        }        
+      })
+      
+      .state('app.profile', {
+        url: '/profile',
+        controller: 'ProfileController as p',
+        templateUrl: 'users/profile.html',
+        resolve: {
           profile: function(Users, Auth){
             return Auth.requireAuth().then(success);
             
@@ -29,6 +42,47 @@ angular.module('angularfireSlackApp')
           }
         } 
       })
+      
+      .state('app.channels', {
+        url: '/channels',
+        controller: 'ChannelsController as c',
+        templateUrl: 'channels/index.html',
+        resolve: {
+          channels: function(Channels){
+            return Channels.$loaded();
+          },
+          profile: function($state, Users, Auth){
+            return Auth.requireAuth().then(success);
+            
+            function success(auth){
+              return Users.getProfile(auth.uid)
+                          .$loaded()
+                          .then(loaded, fail);
+                          
+              function loaded(profile){
+                 if(profile.displayName) {
+                   return profile;
+                 } 
+                 else {
+                   $state.go('app.profile');
+                 }
+              }
+              
+              function fail(err){
+                $state.go('home');
+              }
+            }
+          }
+        } 
+      })
+      
+      .state('app.channels.create', {
+        url: '/create',
+        controller: 'ChannelsController as c',
+        templateUrl: 'channels/create.html'
+      })
+     
+      
       .state('login', {
         url: '/login',
         controller: 'AuthController as a',
@@ -37,6 +91,7 @@ angular.module('angularfireSlackApp')
           requireNoAuth: noAuth
        }
       })
+      
       .state('register', {
         url: '/register',
         controller: 'AuthController as a',
@@ -53,7 +108,7 @@ angular.module('angularfireSlackApp')
       return Auth.requireAuth().then(success, fail);
       
       function success (){
-        $state.go('home'); 
+        $state.go('app.channels'); 
       }
       function fail (){
         return; 
