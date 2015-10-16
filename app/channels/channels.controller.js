@@ -6,7 +6,8 @@ angular.module('angularfireSlackApp')
 		vm.channels = channels;
 		vm.users = Users.all;
 
-
+		Users.setOnline(profile.$id);
+		
 		vm.newChannel = {
 			name: ''
 		}
@@ -19,7 +20,10 @@ angular.module('angularfireSlackApp')
 		} 
 				
 		vm.logout = function (){
-			Auth.logout();
-			$state.go('home');
+			vm.profile.online = null;
+			vm.profile.$save().then(function (){
+				Auth.logout();
+				$state.go('home');				
+			});
 		};
   }]);
